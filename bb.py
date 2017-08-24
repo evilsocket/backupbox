@@ -41,18 +41,17 @@ print "BackupBox is running, press CTRL-C or just kill me biatch!\n"
 while True:
     are_plugged = ( os.access( source, os.R_OK ) and os.access( destination, os.W_OK ) )
     
-    if are_plugged:
-        if not were_plugged:
-            cmd = template.replace("{SOURCE}", source)
-            cmd = cmd.replace("{DESTINATION}", destination)
-            cmd = cmd.replace("{TIMESTAMP}", str(int(time.time())))
-                    
-            print "Both medias detected, executing command:"
-            print "  %s\n" % cmd
-            os.system(cmd)
-            print "\nDone, sync ..."
-            os.system("sync")
-            print "You can unmount and unplug the device now."
+    if are_plugged and not were_plugged:
+        cmd = template.replace("{SOURCE}", source)
+        cmd = cmd.replace("{DESTINATION}", destination)
+        cmd = cmd.replace("{TIMESTAMP}", str(int(time.time())))
+
+        print "Both medias detected, executing command:"
+        print "  %s\n" % cmd
+        os.system(cmd)
+        print "\nDone, sync ..."
+        os.system("sync")
+        print "You can unmount and unplug the device now."
 
     were_plugged = are_plugged
     time.sleep(1)
